@@ -1,6 +1,3 @@
-interface Resume{
-    id: string;
-}
 
 export const resumes: Resume[] = [
   {
