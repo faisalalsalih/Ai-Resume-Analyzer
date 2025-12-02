@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 declare global {
+  // Interface window
   interface Window {
     puter: {
       auth: {
@@ -42,6 +43,8 @@ declare global {
   }
 }
 
+
+// PuterStore Interface
 interface PuterStore {
   isLoading: boolean;
   error: string | null;
@@ -96,9 +99,13 @@ interface PuterStore {
   clearError: () => void;
 }
 
+// getputer Method
+
 const getPuter = (): typeof window.puter | null =>
   typeof window !== "undefined" && window.puter ? window.puter : null;
 
+
+// usePuterStore Zustand Store
 export const usePuterStore = create<PuterStore>((set, get) => {
   const setError = (msg: string) => {
     set({
@@ -116,6 +123,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     });
   };
 
+  // checkAuthStatus Method
   const checkAuthStatus = async (): Promise<boolean> => {
     const puter = getPuter();
     if (!puter) {
@@ -165,6 +173,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     }
   };
 
+  // SignIn Method
   const signIn = async (): Promise<void> => {
     const puter = getPuter();
     if (!puter) {
@@ -183,6 +192,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     }
   };
 
+  // Signout Method
   const signOut = async (): Promise<void> => {
     const puter = getPuter();
     if (!puter) {
@@ -212,6 +222,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     }
   };
 
+  // Refresh User Method
   const refreshUser = async (): Promise<void> => {
     const puter = getPuter();
     if (!puter) {
@@ -241,6 +252,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     }
   };
 
+  // Init Method
   const init = (): void => {
     const puter = getPuter();
     if (puter) {
@@ -249,6 +261,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
       return;
     }
 
+    // interval Method
     const interval = setInterval(() => {
       if (getPuter()) {
         clearInterval(interval);
@@ -265,6 +278,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     }, 10000);
   };
 
+  // Writing Method
   const write = async (path: string, data: string | File | Blob) => {
     const puter = getPuter();
     if (!puter) {
@@ -273,7 +287,8 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     }
     return puter.fs.write(path, data);
   };
-
+  
+  // Read Directory Method
   const readDir = async (path: string) => {
     const puter = getPuter();
     if (!puter) {
@@ -283,6 +298,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.fs.readdir(path);
   };
 
+  // ReadFile Method
   const readFile = async (path: string) => {
     const puter = getPuter();
     if (!puter) {
@@ -292,6 +308,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.fs.read(path);
   };
 
+  // Upload Method
   const upload = async (files: File[] | Blob[]) => {
     const puter = getPuter();
     if (!puter) {
@@ -301,6 +318,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.fs.upload(files);
   };
 
+  // Delete File Method
   const deleteFile = async (path: string) => {
     const puter = getPuter();
     if (!puter) {
@@ -310,6 +328,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.fs.delete(path);
   };
 
+  // Chat Method
   const chat = async (
     prompt: string | ChatMessage[],
     imageURL?: string | PuterChatOptions,
@@ -327,6 +346,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     >;
   };
 
+  // Feedback Method
   const feedback = async (path: string, message: string) => {
     const puter = getPuter();
     if (!puter) {
@@ -354,6 +374,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     ) as Promise<AIResponse | undefined>;
   };
 
+  // image to text Method
   const img2txt = async (image: string | File | Blob, testMode?: boolean) => {
     const puter = getPuter();
     if (!puter) {
@@ -363,6 +384,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.ai.img2txt(image, testMode);
   };
 
+  // getKv Method
   const getKV = async (key: string) => {
     const puter = getPuter();
     if (!puter) {
@@ -372,6 +394,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.kv.get(key);
   };
 
+  // setKV method 
   const setKV = async (key: string, value: string) => {
     const puter = getPuter();
     if (!puter) {
@@ -381,6 +404,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.kv.set(key, value);
   };
 
+  // DeleteKV method
   const deleteKV = async (key: string) => {
     const puter = getPuter();
     if (!puter) {
@@ -390,6 +414,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.kv.delete(key);
   };
 
+  // listKV Method
   const listKV = async (pattern: string, returnValues?: boolean) => {
     const puter = getPuter();
     if (!puter) {
@@ -402,6 +427,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
     return puter.kv.list(pattern, returnValues);
   };
 
+  // flushKV method
   const flushKV = async () => {
     const puter = getPuter();
     if (!puter) {
