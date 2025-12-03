@@ -1,8 +1,12 @@
 import React, { useState, type FormEvent } from 'react'
 import FileUploader from '~/components/FileUploader';
 import Navbar from '~/components/Navbar'
+import { usePuterStore } from '~/lib/puter';
 
 const upload = () => {
+
+    const { auth, isLoading, fs, ai, kv} = usePuterStore();
+
     const [isProcessing, setIsProcessing] = useState(false);
     const [statusText, setStausText] = useState('');
 
@@ -18,6 +22,7 @@ const upload = () => {
         setStausText("Uploading the file...");
 
         const uploadedFile = await fs.upload([file]);
+        
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
