@@ -36,6 +36,7 @@ const upload = () => {
       <section className="main-section">
         <div className="page-heading py-16">
             <h1>Smart feedback for your dream job</h1>
+            {/* if isProcessing is true then show the loading gif image */}
             {
                 isProcessing ? (
                     <>
@@ -46,7 +47,7 @@ const upload = () => {
                     <h2>Drop your resume for an ATS score and improvement tips</h2>
                 )
             }
-
+            {/* if isProcesing is not true than show this file */}
             {!isProcessing && (
                 <form id='upload-form' onSubmit={handleSubmit} className='flex flex-col gap-4 mt-8'>
                     <div className="form-div">
