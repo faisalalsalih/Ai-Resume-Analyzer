@@ -12,6 +12,14 @@ const upload = () => {
         setFile(file)
     }
 
+
+    const handleAnalyze = async ({companyName, jobTitle, jobDescription, file} : {companyName: string, jobTitle:string, jobDescription:string, file:File}) => {
+        setIsProcessing(true);
+        setStausText("Uploading the file...");
+
+        const uploadedFile = await fs.upload([file]);
+    }
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const form = e.currentTarget.closest('form');
@@ -20,13 +28,13 @@ const upload = () => {
         const formData = new FormData(form);
 
 
-        const companyName = formData.get('company-name');
-        const jobTitle = formData.get('job-title');
-        const jobDescription = formData.get('job-description');
+        const companyName = formData.get('company-name') as string;
+        const jobTitle = formData.get('job-title') as string;
+        const jobDescription = formData.get('job-description') as string;
 
-        console.log({
-            companyName, jobTitle, jobDescription, file
-        })
+        if(!file) return;
+
+        handleAnalyze({companyName, jobTitle, jobDescription, file})
     }
   return (
     <>
